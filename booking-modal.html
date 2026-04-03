@@ -1,0 +1,222 @@
+<!-- Add this to index.html before the closing </body> tag for enhanced booking form -->
+
+<!-- Booking Modal -->
+<div id="bookingModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Book Your Travel Package</h2>
+        
+        <form id="bookingForm" class="booking-form">
+            <div class="form-group">
+                <label for="fullname">Full Name *</label>
+                <input type="text" id="fullname" name="fullname" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <div class="form-group">
+                <label for="package">Select Package *</label>
+                <select id="package" name="package" required>
+                    <option value="">Choose a package...</option>
+                    <option value="european-paradise">European Paradise - ₹89,999</option>
+                    <option value="asia-explorer">Asia Explorer - ₹59,999</option>
+                    <option value="himalayan-trek">Himalayan Trek - ₹34,999</option>
+                    <option value="tropical-escape">Tropical Island Escape - ₹79,999</option>
+                    <option value="desert-safari">Desert Safari - ₹44,999</option>
+                    <option value="south-india">South India Treasure - ₹39,999</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="travelers">Number of Travelers *</label>
+                <input type="number" id="travelers" name="travelers" min="1" value="1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="date">Preferred Travel Date *</label>
+                <input type="date" id="date" name="date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="message">Special Requests</label>
+                <textarea id="message" name="message" rows="4" placeholder="Any special requirements or requests..."></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Book Now</button>
+        </form>
+    </div>
+</div>
+
+<style>
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 2rem;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.close:hover {
+    color: #000;
+}
+
+.modal-content h2 {
+    color: #667eea;
+    margin-bottom: 1.5rem;
+    text-align: left;
+    font-size: 1.8rem;
+}
+
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    color: #333;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+        margin: 20% auto;
+    }
+}
+</style>
+
+<script>
+// Booking Modal JavaScript
+const modal = document.getElementById('bookingModal');
+const closeBtn = document.querySelector('.close');
+const bookingForm = document.getElementById('bookingForm');
+
+// Open modal when Book Now button is clicked
+const bookNowButtons = document.querySelectorAll('.book-btn, .enquire-btn');
+bookNowButtons.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        if (this.classList.contains('book-btn') || this.classList.contains('enquire-btn')) {
+            e.preventDefault();
+            modal.style.display = 'block';
+        }
+    });
+});
+
+// Close modal
+closeBtn.addEventListener('click', function() {
+    modal.style.display = 'none';
+});
+
+window.addEventListener('click', function(e) {
+    if (e.target == modal) {
+        modal.style.display = 'none';
+    }
+});
+
+// Handle form submission
+bookingForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = {
+        name: document.getElementById('fullname').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        package: document.getElementById('package').value,
+        travelers: document.getElementById('travelers').value,
+        date: document.getElementById('date').value,
+        message: document.getElementById('message').value
+    };
+    
+    // Show success message
+    showNotification(`Booking request received! We'll contact you at ${formData.email} soon.`, 'success');
+    
+    // Reset form
+    bookingForm.reset();
+    modal.style.display = 'none';
+    
+    console.log('Booking data:', formData);
+});
+</script>
